@@ -82,8 +82,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>G:\opengl_project\OpenGL\include;$(IncludePath)</IncludePath>
-    <LibraryPath>G:\opengl_project\OpenGL\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>G:\opengl_project\opengl_cpp_pro\opengl_cpp_project\include;$(IncludePath)</IncludePath>
+    <LibraryPath>G:\opengl_project\opengl_cpp_pro\opengl_cpp_project\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
