@@ -3,6 +3,9 @@
 #include <iostream>
 #include <shader_s.h>
 #include <stb_image.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 // settings
 const unsigned int SCR_WIDTH = 800;
@@ -149,6 +152,7 @@ int main()
     glUniform1i(glGetUniformLocation(ourShader.ID, "ourTexture0"), 0);
     ourShader.setInt("ourTexture1", 1);
 
+
     while (!glfwWindowShouldClose(window))
     {
         // 输入
@@ -168,11 +172,26 @@ int main()
 
         // 激活着色器
         ourShader.use();
-
-        // 绘制三角形
         ourShader.setFloat("textureValue", mixValue);
-        glBindVertexArray(VAO);
+        //glBindVertexArray(VAO);
+
+        // 绘制三角形       
+        glm::mat4 trans;
+        trans = glm::translate(trans, glm::vec3(0.5f, 0.5f, 0.5f));
+        trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0, 0.0, 1.0));
+        trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));
+        unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
+        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+        glm::mat4 trans2;
+        trans2 = glm::translate(trans2, glm::vec3(-0.5f, 0.5f, 0.5f));
+        float scaleAmount = static_cast<float>(sin(glfwGetTime()));
+        trans2 = glm::scale(trans2, glm::vec3(scaleAmount, scaleAmount, scaleAmount));
+        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans2)); // this time take the matrix value array's first element as its memory pointer value
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+
 
         // 检查并调用事件，交换缓冲
         glfwSwapBuffers(window);
